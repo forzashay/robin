@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robin - AI Associate</title>
+    <!-- Added Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --robin-blue: #3b82f6; /* A pleasing medium blue */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            /* Updated font family to Inter with fallbacks */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Style for "Coming soon" text at the top */
+        .coming-soon {
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            /* Adjusted font weight for the nicer Inter font */
+            font-weight: 500;
+            line-height: 1.4;
+            /* Added letter spacing for elegance */
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+        }
+        
+        /* Style for the Robin name */
+        .robin-name {
+            color: var(--robin-blue);
+            font-weight: 600; /* Slightly bolder to make it stand out more */
+        }
+        
+        /* Style for "Built in San Francisco" text */
+        .location {
+            font-size: 0.95rem;
+            color: #6b7280; /* Subtle gray */
+            font-weight: 400;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .coming-soon {
+                font-size: 1.1rem;
+                top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="coming-soon">Coming Soon</div>
+    
+    <div class="container">
+        <h1>We're building <span class="robin-name">Robin</span>, an agentic AI Associate for VC, PE, and IB.</h1>
+        <p class="location">Built in San Francisco, CA</p>
+    </div>
+</body>
+</html>
