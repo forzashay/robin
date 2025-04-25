@@ -7,7 +7,7 @@
     <!-- Added Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* Base styles */
         :root {
@@ -36,16 +36,12 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
         }
         
         /* Style for "Coming soon" text at the top */
         .coming-soon {
-            position: absolute;
-            top: 2rem;
-            left: 0;
-            right: 0;
-            text-align: center;
+            /* Changed from absolute positioning to relative positioning */
+            margin-bottom: 4rem; /* Added margin to create space between "Coming Soon" and main heading */
             font-size: 1.25rem;
             font-weight: 500;
             color: #374151;
@@ -54,6 +50,8 @@
         .container {
             text-align: center;
             max-width: 800px;
+            position: relative;
+            width: 100%;
         }
         
         h1 {
@@ -72,11 +70,320 @@
             font-weight: 600; /* Slightly bolder to make it stand out more */
         }
         
+        /* Time-saving highlight section */
+        .time-saving {
+            margin: 2.5rem auto;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(219, 234, 254, 0.8) 0%, rgba(191, 219, 254, 0.8) 100%);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .time-saving::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right, 
+                rgba(255, 255, 255, 0) 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(30deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(30deg);
+            }
+        }
+        
+        .time-saving-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .time-saving-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 50%;
+            color: var(--robin-blue);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+        }
+        
+        .time-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--robin-blue);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .time-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .time-subtext {
+            font-size: 1rem;
+            color: #4b5563;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
         /* Style for "Built in San Francisco" text */
         .location {
             font-size: 0.95rem;
             color: #6b7280; /* Subtle gray */
             font-weight: 400;
+            margin-bottom: 8rem; /* Significantly increased margin to push robot further down */
+        }
+        
+        /* Robot and speech bubble styles */
+        .robot-container {
+            position: relative;
+            margin: 0 auto;
+            width: 120px;
+            height: 140px;
+        }
+        
+        .speech-bubble {
+            position: absolute;
+            top: -40px;
+            right: -80px;
+            background-color: #fff;
+            border: 2px solid var(--robin-blue);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--dark);
+            z-index: 1;
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border-right: 2px solid var(--robin-blue);
+            border-bottom: 2px solid var(--robin-blue);
+            transform: rotate(45deg);
+        }
+        
+        .robot {
+            width: 80px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .robot-head {
+            width: 60px;
+            height: 50px;
+            background-color: var(--robin-blue);
+            border-radius: 10px;
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .robot-eye {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border-radius: 50%;
+            top: 15px;
+        }
+        
+        .robot-eye.left {
+            left: 12px;
+        }
+        
+        .robot-eye.right {
+            right: 12px;
+        }
+        
+        .robot-antenna {
+            position: absolute;
+            width: 8px;
+            height: 15px;
+            background-color: var(--robin-blue);
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .robot-body {
+            width: 70px;
+            height: 50px;
+            background-color: var(--robin-blue);
+            border-radius: 0 0 10px 10px;
+            margin: 5px auto 0;
+            position: relative;
+        }
+        
+        .robot-arm {
+            position: absolute;
+            width: 10px;
+            height: 30px;
+            background-color: var(--robin-blue);
+            top: 10px;
+            border-radius: 5px;
+        }
+        
+        .robot-arm.left {
+            left: -15px;
+            transform: rotate(-20deg);
+        }
+        
+        .robot-arm.right {
+            right: -15px;
+            transform: rotate(20deg);
+        }
+        
+        /* Capabilities section */
+        .capabilities {
+            margin-top: 3rem;
+            width: 100%;
+        }
+        
+        .capabilities-intro {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: #374151;
+        }
+        
+        .capabilities-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .capability-item {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            width: 220px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .capability-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .capability-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #dbeafe;
+            border-radius: 50%;
+            color: var(--robin-blue);
+        }
+        
+        .capability-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        
+        .capability-desc {
+            font-size: 0.9rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+        
+        /* Connector lines to simulate branches */
+        .connector {
+            width: 2px;
+            height: 50px;
+            background-color: #e2e8f0;
+            margin: 0 auto;
+        }
+        
+        .branches {
+            position: relative;
+            width: 100%;
+            height: 30px;
+            margin-bottom: 1rem;
+        }
+        
+        .branch {
+            position: absolute;
+            background-color: #e2e8f0;
+        }
+        
+        .branch-center {
+            width: 2px;
+            height: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .branch-horizontal {
+            height: 2px;
+            width: 80%;
+            top: 30px;
+            left: 10%;
+        }
+        
+        .branch-left, .branch-center-left, .branch-center-right, .branch-right, .branch-center {
+            width: 2px;
+            height: 20px;
+            top: 30px;
+        }
+        
+        .branch-left {
+            left: 10%;
+        }
+        
+        .branch-center-left {
+            left: 30%;
+        }
+        
+        .branch-center {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .branch-center-right {
+            right: 30%;
+        }
+        
+        .branch-right {
+            right: 10%;
         }
         
         @media (max-width: 768px) {
@@ -87,17 +394,169 @@
             
             .coming-soon {
                 font-size: 1.1rem;
-                top: 1.5rem;
+                margin-bottom: 3rem; /* Adjusted for mobile */
+            }
+            
+            .time-saving {
+                padding: 1.25rem;
+                margin: 2rem auto;
+            }
+            
+            .time-number {
+                font-size: 2.8rem;
+            }
+            
+            .time-text {
+                font-size: 1.2rem;
+            }
+            
+            .robot-container {
+                transform: scale(0.9);
+            }
+            
+            .speech-bubble {
+                right: -60px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            
+            .location {
+                margin-bottom: 6rem; /* Adjusted for mobile but still significant spacing */
+            }
+            
+            .capabilities-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .capability-item {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .branches {
+                display: none; /* Hide branches on mobile for simplicity */
             }
         }
     </style>
 </head>
 <body>
-    <div class="coming-soon">Coming Soon</div>
-    
     <div class="container">
+        <div class="coming-soon">Coming Soon</div>
+        
         <h1>We're building <span class="robin-name">Robin</span>, an agentic AI Associate for VC, PE, and IB.</h1>
+        
+        <!-- Time-saving highlight section -->
+        <div class="time-saving">
+            <div class="time-saving-content">
+                <div class="time-saving-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </div>
+                <div class="time-number">10+ Hours</div>
+                <div class="time-text">Saved Every Week</div>
+                <p class="time-subtext">Robin automates your routine tasks so you can focus on what truly matters.</p>
+            </div>
+        </div>
+        
         <p class="location">Built in San Francisco, CA</p>
+        
+        <div class="robot-container">
+            <div class="speech-bubble">Hi, I'm Robin!</div>
+            <div class="robot">
+                <div class="robot-antenna"></div>
+                <div class="robot-head">
+                    <div class="robot-eye left"></div>
+                    <div class="robot-eye right"></div>
+                </div>
+                <div class="robot-body">
+                    <div class="robot-arm left"></div>
+                    <div class="robot-arm right"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Connector and branches -->
+        <div class="connector"></div>
+        <div class="branches">
+            <div class="branch branch-center"></div>
+            <div class="branch branch-horizontal"></div>
+            <div class="branch branch-left"></div>
+            <div class="branch branch-center-left"></div>
+            <div class="branch branch-center"></div>
+            <div class="branch branch-center-right"></div>
+            <div class="branch branch-right"></div>
+        </div>
+        
+        <!-- Capabilities section -->
+        <div class="capabilities">
+            <p class="capabilities-intro">Here's a few things I can do for you!</p>
+            
+            <div class="capabilities-grid">
+                <div class="capability-item">
+                    <div class="capability-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="capability-title">Due Diligence</h3>
+                    <p class="capability-desc">Analyze financials, market data, and competitive landscapes to support investment decisions.</p>
+                </div>
+                
+                <div class="capability-item">
+                    <div class="capability-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <h3 class="capability-title">Deal Sourcing</h3>
+                    <p class="capability-desc">Identify promising investment opportunities and filter deals based on your criteria.</p>
+                </div>
+                
+                <div class="capability-item">
+                    <div class="capability-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="capability-title">Investment Memos</h3>
+                    <p class="capability-desc">Draft comprehensive investment memos with key insights and recommendations.</p>
+                </div>
+                
+                <div class="capability-item">
+                    <div class="capability-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3 class="capability-title">Admin Tasks</h3>
+                    <p class="capability-desc">Update deal pipelines, organize data, and handle routine administrative work to keep your operations running smoothly.</p>
+                </div>
+                
+                <div class="capability-item">
+                    <div class="capability-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h3 class="capability-title">Personal Assistant</h3>
+                    <p class="capability-desc">Schedule calls, send follow-ups, and keep you on track with your tasks and priorities throughout the day.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
