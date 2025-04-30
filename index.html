@@ -40,11 +40,32 @@
         
         /* Style for "Coming soon" text at the top */
         .coming-soon {
-            /* Changed from absolute positioning to relative positioning */
             margin-bottom: 4rem; /* Added margin to create space between "Coming Soon" and main heading */
             font-size: 1.25rem;
             font-weight: 500;
             color: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .location-highlight {
+            position: relative;
+            color: var(--robin-blue);
+            font-weight: 600;
+            padding: 0 0.25rem;
+        }
+        
+        .location-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--robin-blue);
+            opacity: 0.3;
         }
         
         .container {
@@ -68,6 +89,65 @@
         .robin-name {
             color: var(--robin-blue);
             font-weight: 600; /* Slightly bolder to make it stand out more */
+        }
+        
+        /* Waitlist callout */
+        .waitlist-callout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f9ff;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            margin: 1.5rem auto;
+            max-width: 500px;
+            gap: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .waitlist-callout:hover {
+            transform: translateY(-2px);
+        }
+
+        .waitlist-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            color: var(--robin-blue);
+            flex-shrink: 0;
+        }
+
+        .waitlist-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1e40af;
+        }
+
+        .waitlist-number {
+            font-weight: 700;
+            color: var(--robin-blue);
+        }
+
+        @media (max-width: 768px) {
+            .waitlist-callout {
+                padding: 0.6rem 1rem;
+                margin: 1.25rem auto;
+            }
+            
+            .waitlist-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .waitlist-text {
+                font-size: 0.9rem;
+            }
         }
         
         /* Time-saving highlight section */
@@ -149,20 +229,13 @@
             margin: 0 auto;
         }
         
-        /* Style for "Built in San Francisco" text */
-        .location {
-            font-size: 0.95rem;
-            color: #6b7280; /* Subtle gray */
-            font-weight: 400;
-            margin-bottom: 8rem; /* Significantly increased margin to push robot further down */
-        }
-        
         /* Robot and speech bubble styles */
         .robot-container {
             position: relative;
             margin: 0 auto;
             width: 120px;
             height: 140px;
+            margin-top: 8rem; /* Added margin to push robot down since we removed the location text */
         }
         
         .speech-bubble {
@@ -293,6 +366,7 @@
             width: 220px;
             text-align: center;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
         }
         
         .capability-item:hover {
@@ -323,6 +397,241 @@
             font-size: 0.9rem;
             color: #6b7280;
             line-height: 1.4;
+        }
+        
+        /* Example section styles */
+        .example-section {
+            margin-top: 4rem;
+            width: 100%;
+        }
+        
+        .example-heading {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #1f2937;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .example-card {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .example-header {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .example-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #dbeafe;
+            border-radius: 50%;
+            color: var(--robin-blue);
+            flex-shrink: 0;
+        }
+        
+        .example-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .example-content {
+            padding: 1.25rem;
+            text-align: left;
+        }
+        
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .chat-message:last-child {
+            margin-bottom: 0;
+        }
+        
+        .user-message {
+            justify-content: flex-end;
+        }
+        
+        .robin-message {
+            justify-content: flex-start;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .user-avatar {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        
+        .robin-avatar {
+            background-color: #dbeafe;
+            color: var(--robin-blue);
+        }
+        
+        .message-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            max-width: 80%;
+        }
+        
+        .user-bubble {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            border-top-right-radius: 4px;
+        }
+        
+        .robin-bubble {
+            background-color: #eff6ff;
+            color: #1e40af;
+            border-top-left-radius: 4px;
+        }
+        
+        .task-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        
+        .task-status {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .status-complete {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .task-text {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        
+        .memo-content {
+            font-size: 0.85rem;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+        
+        .memo-highlight {
+            background-color: #fef3c7;
+            padding: 0 0.25rem;
+            border-radius: 2px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .notification {
+            background-color: #f0f9ff;
+            border-left: 3px solid var(--robin-blue);
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #1e40af;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .chart-container {
+            background-color: #f8fafc;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .chart-bar {
+            height: 24px;
+            background: linear-gradient(90deg, #dbeafe 0%, #93c5fd 100%);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .chart-label {
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #1e40af;
+        }
+        
+        .chart-value {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+        
+        .insight-tag {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: #1e40af;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
         /* Connector lines to simulate branches */
@@ -393,8 +702,10 @@
             }
             
             .coming-soon {
-                font-size: 1.1rem;
+                font-size: 1rem;
                 margin-bottom: 3rem; /* Adjusted for mobile */
+                flex-direction: column;
+                gap: 0.25rem;
             }
             
             .time-saving {
@@ -412,16 +723,13 @@
             
             .robot-container {
                 transform: scale(0.9);
+                margin-top: 6rem;
             }
             
             .speech-bubble {
                 right: -60px;
                 font-size: 0.8rem;
                 padding: 6px 12px;
-            }
-            
-            .location {
-                margin-bottom: 6rem; /* Adjusted for mobile but still significant spacing */
             }
             
             .capabilities-grid {
@@ -437,14 +745,39 @@
             .branches {
                 display: none; /* Hide branches on mobile for simplicity */
             }
+            
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-card {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="coming-soon">Coming Soon</div>
+        <div class="coming-soon">
+            Coming Soon - <span class="location-highlight">Built in San Francisco, CA</span>
+        </div>
         
         <h1>We're building <span class="robin-name">Robin</span>, an agentic AI Associate for VC, PE, and IB.</h1>
+        
+        <!-- Waitlist callout -->
+        <div class="waitlist-callout">
+            <div class="waitlist-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <div class="waitlist-text">
+                <span class="waitlist-number">100+</span> people have already joined the waitlist
+            </div>
+        </div>
         
         <!-- Time-saving highlight section -->
         <div class="time-saving">
@@ -460,8 +793,6 @@
                 <p class="time-subtext">Robin automates your routine tasks so you can focus on what truly matters.</p>
             </div>
         </div>
-        
-        <p class="location">Built in San Francisco, CA</p>
         
         <div class="robot-container">
             <div class="speech-bubble">Hi, I'm Robin!</div>
@@ -554,6 +885,418 @@
                     </div>
                     <h3 class="capability-title">Personal Assistant</h3>
                     <p class="capability-desc">Schedule calls, send follow-ups, and keep you on track with your tasks and priorities throughout the day.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Examples section -->
+        <div class="example-section">
+            <h2 class="example-heading">Robin in Action</h2>
+            
+            <div class="examples-grid">
+                <!-- Admin Tasks Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="example-title">Admin Tasks</div>
+                    </div>
+                    <div class="example-content">
+                        <div class="notification">
+                            <div class="notification-title">Robin noticed updates needed</div>
+                            I detected several deal status changes from your emails and meeting notes that need to be reflected in our pipeline.
+                        </div>
+                        <div class="chat-message robin-message">
+                            <div class="message-avatar robin-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-bubble robin-bubble">
+                                I've proactively updated the deal pipeline based on information from your recent emails and meetings:
+                                <ul class="task-list">
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">OpenAI moved to Active Diligence (based on yesterday's call)</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Anthropic moved to Term Sheet (per CEO email)</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Added Cohere to Initial Screening (from conference contact)</div>
+                                    </li>
+                                </ul>
+                                <br>
+                                I've also scheduled follow-up meetings with the OpenAI team for next Tuesday.
+                            </div>
+                        </div>
+                        <div class="chat-message user-message">
+                            <div class="message-bubble user-bubble">
+                                Thanks Robin! That's helpful.
+                            </div>
+                            <div class="message-avatar user-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Due Diligence Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                            </svg>
+                        </div>
+                        <div class="example-title">Due Diligence</div>
+                    </div>
+                    <div class="example-content">
+                        <div class="notification">
+                            <div class="notification-title">Robin initiated analysis</div>
+                            I noticed you've been researching OpenAI. I've taken the initiative to analyze their financials and market position.
+                        </div>
+                        <div class="chat-message robin-message">
+                            <div class="message-avatar robin-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-bubble robin-bubble">
+                                I've completed my analysis of OpenAI's financials and market position. Key findings:
+                                <ul class="task-list">
+                                    <li class="task-item">
+                                        <div class="task-status status-pending">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">GPT-4 API usage growing at 215% QoQ, but compute costs rising at 187%</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-pending">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Enterprise contracts up 340% YoY, but competition from Anthropic intensifying</div>
+                                    </li>
+                                </ul>
+                                <br>
+                                I've prepared a list of due diligence questions. Would you like me to schedule a call with their CFO to discuss these findings?
+                            </div>
+                        </div>
+                        <div class="chat-message user-message">
+                            <div class="message-bubble user-bubble">
+                                Yes, please schedule that call for next week. Send me the questions beforehand.
+                            </div>
+                            <div class="message-avatar user-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Deal Sourcing Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <div class="example-title">Deal Sourcing</div>
+                    </div>
+                    <div class="example-content">
+                        <div class="notification">
+                            <div class="notification-title">Robin discovered opportunities</div>
+                            Based on your investment thesis and recent market trends, I've identified promising opportunities.
+                        </div>
+                        <div class="chat-message robin-message">
+                            <div class="message-avatar robin-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-bubble robin-bubble">
+                                I've identified these healthcare AI startups that match your investment criteria:
+                                <ul class="task-list">
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">MedMind AI - $3.2M seed, 127% QoQ growth, strong IP portfolio</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">DiagnosticAI - $4.7M, FDA approval pending, strong founding team</div>
+                                    </li>
+                                </ul>
+                                <br>
+                                I've already reached out to both founding teams and scheduled introductory calls for next week. I've also prepared preliminary research reports on both companies.
+                            </div>
+                        </div>
+                        <div class="chat-message user-message">
+                            <div class="message-bubble user-bubble">
+                                Perfect timing. Let me review those reports.
+                            </div>
+                            <div class="message-avatar user-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Investment Memos Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="example-title">Investment Memos</div>
+                    </div>
+                    <div class="example-content">
+                        <div class="notification">
+                            <div class="notification-title">Robin prepared memo</div>
+                            I noticed your interest in Quantum Computing Inc. and prepared a comprehensive investment memo based on our research.
+                        </div>
+                        <div class="chat-message robin-message">
+                            <div class="message-avatar robin-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-bubble robin-bubble">
+                                <div class="memo-content">
+                                    <strong>Investment Memo Summary: Quantum Computing Inc.</strong><br>
+                                    <em>(Full 12-page memo saved to the deal room)</em><br><br>
+                                    <strong>Recommendation:</strong> <span class="memo-highlight">Proceed to Term Sheet</span><br><br>
+                                    <strong>Key Strengths:</strong><br>
+                                    - Proprietary 128-qubit architecture with 2x stability vs competitors<br>
+                                    - $4.2M ARR with 94% YoY growth<br>
+                                    - Strong IP portfolio (17 patents)<br><br>
+                                    <strong>Risks:</strong><br>
+                                    - Hardware scaling challenges beyond 256 qubits<br>
+                                    - Potential competition from Google, IBM<br><br>
+                                    <strong>Proposed Terms:</strong> $25M Series B, $150M pre-money valuation
+                                </div>
+                                <br>
+                                The full memo includes detailed technical analysis, competitive landscape, team assessment, financial projections, and market sizing. I've also prepared a competitive analysis comparing their technology to other players in the quantum computing space.
+                            </div>
+                        </div>
+                        <div class="chat-message user-message">
+                            <div class="message-bubble user-bubble">
+                                This is excellent. Share the full memo with the investment committee.
+                            </div>
+                            <div class="message-avatar user-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Personal Assistant Example -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </div>
+                        <div class="example-title">Personal Assistant</div>
+                    </div>
+                    <div class="example-content">
+                        <div class="notification">
+                            <div class="notification-title">Robin organized your day</div>
+                            I've prepared your daily brief and optimized your workflow for maximum productivity.
+                        </div>
+                        <div class="chat-message robin-message">
+                            <div class="message-avatar robin-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-bubble robin-bubble">
+                                <strong>Good morning! I've optimized your day:</strong>
+                                <ul class="task-list">
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Analyzed the Quantum Computing Inc. pitch deck and highlighted 3 critical questions for your meeting</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Prepared a competitive analysis for your board presentation (saved to your drive)</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-complete">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polyline points="20 6 9 17 4 12"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Reorganized your SF trip next week to maximize founder meetings (8 meetings in 2 days)</div>
+                                    </li>
+                                </ul>
+                                <br>
+                                I've also drafted responses to the 5 highest-priority emails in your inbox and compiled the latest updates from all portfolio companies into a single briefing document for your review.
+                            </div>
+                        </div>
+                        <div class="chat-message user-message">
+                            <div class="message-bubble user-bubble">
+                                This is incredibly helpful. Send me the briefing document.
+                            </div>
+                            <div class="message-avatar user-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Market Intelligence Example (New) -->
+                <div class="example-card">
+                    <div class="example-header">
+                        <div class="example-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3v18h18"></path>
+                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
+                            </svg>
+                        </div>
+                        <div class="example-title">Market Intelligence</div>
+                    </div>
+                    <div class="example-content">
+                        <div class="notification">
+                            <div class="notification-title">Robin detected market shift</div>
+                            I've identified a significant market trend that impacts your AI portfolio companies.
+                        </div>
+                        <div class="chat-message robin-message">
+                            <div class="message-avatar robin-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                </svg>
+                            </div>
+                            <div class="message-bubble robin-bubble">
+                                <strong>Market Intelligence Alert:</strong> I've detected a significant shift in the AI infrastructure market that will impact several of your portfolio companies.
+                                <br><br>
+                                <strong>Key findings:</strong>
+                                <ul class="task-list">
+                                    <li class="task-item">
+                                        <div class="task-status status-pending">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">NVIDIA H100 supply constraints easing (42% increase in availability)</div>
+                                    </li>
+                                    <li class="task-item">
+                                        <div class="task-status status-pending">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                            </svg>
+                                        </div>
+                                        <div class="task-text">Cloud GPU pricing dropped 18% in the last 30 days</div>
+                                    </li>
+                                </ul>
+                                <br>
+                                <div class="chart-container">
+                                    <div class="chart-bar" style="width: 85%;">
+                                        <span class="chart-label">NVIDIA</span>
+                                        <span class="chart-value">+85%</span>
+                                    </div>
+                                    <div class="chart-bar" style="width: 62%;">
+                                        <span class="chart-label">AMD</span>
+                                        <span class="chart-value">+62%</span>
+                                    </div>
+                                    <div class="chart-bar" style="width: 47%;">
+                                        <span class="chart-label">Intel</span>
+                                        <span class="chart-value">+47%</span>
+                                    </div>
+                                </div>
+                                <br>
+                                <span class="insight-tag">Opportunity</span>
+                                <span class="insight-tag">Cost Reduction</span>
+                                <span class="insight-tag">Scaling</span>
+                                <br><br>
+                                I've already scheduled calls with CTOs of your three AI portfolio companies to discuss how they can leverage this shift to reduce infrastructure costs and accelerate growth.
+                            </div>
+                        </div>
+                        <div class="chat-message user-message">
+                            <div class="message-bubble user-bubble">
+                                This is incredibly valuable. Please prepare a brief for our partners meeting.
+                            </div>
+                            <div class="message-avatar user-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
