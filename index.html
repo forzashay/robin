@@ -634,6 +634,34 @@
             margin-bottom: 0.5rem;
         }
         
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            color: #6b7280;
+        }
+
+        .footer .location-highlight {
+            position: relative;
+            color: var(--robin-blue);
+            font-weight: 600;
+            padding: 0 0.25rem;
+        }
+
+        .footer .location-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--robin-blue);
+            opacity: 0.3;
+        }
+        
         /* Connector lines to simulate branches */
         .connector {
             width: 2px;
@@ -753,13 +781,19 @@
             .example-card {
                 max-width: 100%;
             }
+
+            .footer {
+                margin-top: 3rem;
+                padding: 1.5rem 0 1rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="coming-soon">
-            Coming Soon - <span class="location-highlight">Built in San Francisco, CA</span>
+            Coming Soon
         </div>
         
         <h1>We're building <span class="robin-name">Robin</span>, an agentic AI Associate for VC, PE, and IB.</h1>
@@ -1300,6 +1334,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <span class="location-highlight">Built in San Francisco, CA</span>
     </div>
 </body>
 </html>
