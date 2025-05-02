@@ -13,10 +13,28 @@
         :root {
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
             --secondary: #64748b;
             --light: #f8fafc;
             --dark: #0f172a;
             --robin-blue: #3b82f6; /* A pleasing medium blue */
+            --robin-blue-dark: #2563eb;
+            --robin-blue-light: #93c5fd;
+            --accent: #8b5cf6; /* Purple accent */
+            --accent-light: #c4b5fd;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
         }
         
         * {
@@ -26,28 +44,91 @@
         }
         
         body {
-            /* Updated font family to Inter with fallbacks */
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #ffffff;
-            color: #1a1a1a;
+            color: var(--gray-800);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background decorative elements */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 80%;
+            background: radial-gradient(circle at top right, rgba(147, 197, 253, 0.15), rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40%;
+            height: 60%;
+            background: radial-gradient(circle at bottom left, rgba(196, 181, 253, 0.1), rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
         }
         
         /* Style for "Coming soon" text at the top */
         .coming-soon {
-            margin-bottom: 4rem; /* Added margin to create space between "Coming Soon" and main heading */
+            margin-bottom: 4rem;
             font-size: 1.25rem;
             font-weight: 500;
-            color: #374151;
+            color: var(--gray-600);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            position: relative;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+
+        .coming-soon::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--robin-blue);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+            
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+            
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
         }
         
         .location-highlight {
@@ -70,25 +151,48 @@
         
         .container {
             text-align: center;
-            max-width: 800px;
+            max-width: 1000px;
             position: relative;
             width: 100%;
+            z-index: 1;
         }
         
         h1 {
-            font-size: 2.5rem;
-            /* Adjusted font weight for the nicer Inter font */
-            font-weight: 500;
-            line-height: 1.4;
-            /* Added letter spacing for elegance */
-            letter-spacing: -0.02em;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
             margin-bottom: 2rem;
+            background: linear-gradient(to right, var(--gray-900), var(--gray-700));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
         
         /* Style for the Robin name */
         .robin-name {
             color: var(--robin-blue);
-            font-weight: 600; /* Slightly bolder to make it stand out more */
+            font-weight: 700;
+            background: linear-gradient(to right, var(--robin-blue), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        .robin-name::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--robin-blue-light), var(--accent-light));
+            border-radius: 2px;
+            opacity: 0.5;
         }
         
         /* Waitlist callout */
@@ -96,71 +200,83 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f0f9ff;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            padding: 0.75rem 1.5rem;
-            margin: 1.5rem auto;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 16px;
+            padding: 1rem 1.75rem;
+            margin: 2rem auto;
             max-width: 500px;
-            gap: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
-            transition: transform 0.2s ease;
+            gap: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.05);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
         }
 
         .waitlist-callout:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.15), 0 10px 10px -5px rgba(59, 130, 246, 0.1);
         }
 
         .waitlist-icon {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
-            background-color: rgba(59, 130, 246, 0.1);
-            border-radius: 50%;
-            color: var(--robin-blue);
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
+            border-radius: 12px;
+            color: white;
             flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
         }
 
         .waitlist-text {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #1e40af;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            line-height: 1.4;
         }
 
         .waitlist-number {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--robin-blue);
+            font-size: 1.25rem;
+            background: linear-gradient(to right, var(--robin-blue), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
 
         @media (max-width: 768px) {
             .waitlist-callout {
-                padding: 0.6rem 1rem;
-                margin: 1.25rem auto;
+                padding: 0.75rem 1.25rem;
+                margin: 1.5rem auto;
             }
             
             .waitlist-icon {
-                width: 30px;
-                height: 30px;
+                width: 40px;
+                height: 40px;
             }
             
             .waitlist-text {
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
         }
         
         /* Time-saving highlight section */
         .time-saving {
-            margin: 2.5rem auto;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, rgba(219, 234, 254, 0.8) 0%, rgba(191, 219, 254, 0.8) 100%);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
-            max-width: 600px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(219, 234, 254, 0.9) 0%, rgba(191, 219, 254, 0.9) 100%);
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.25), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+            max-width: 650px;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(59, 130, 246, 0.2);
+            transform: perspective(1000px) rotateX(2deg);
+            backdrop-filter: blur(8px);
         }
         
         .time-saving::before {
@@ -173,11 +289,11 @@
             background: linear-gradient(
                 to right, 
                 rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.3) 50%, 
+                rgba(255, 255, 255, 0.5) 50%, 
                 rgba(255, 255, 255, 0) 100%
             );
             transform: rotate(30deg);
-            animation: shine 3s infinite;
+            animation: shine 6s infinite;
         }
         
         @keyframes shine {
@@ -198,67 +314,92 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            width: 60px;
-            height: 60px;
-            background-color: white;
-            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, white, #f8fafc);
+            border-radius: 20px;
             color: var(--robin-blue);
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-saving-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            border-radius: 20px;
         }
         
         .time-number {
-            font-size: 3.5rem;
+            font-size: 4.5rem;
             font-weight: 800;
             color: var(--robin-blue);
             line-height: 1;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(to right, var(--robin-blue-dark), var(--robin-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            letter-spacing: -0.03em;
         }
         
         .time-text {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.75rem;
+            font-weight: 700;
             color: var(--dark);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
         }
         
         .time-subtext {
-            font-size: 1rem;
-            color: #4b5563;
-            max-width: 400px;
+            font-size: 1.125rem;
+            color: var(--gray-700);
+            max-width: 450px;
             margin: 0 auto;
+            line-height: 1.6;
         }
         
         /* Robot and speech bubble styles */
         .robot-container {
             position: relative;
             margin: 0 auto;
-            width: 120px;
-            height: 140px;
-            margin-top: 8rem; /* Added margin to push robot down since we removed the location text */
+            width: 160px;
+            height: 180px;
+            margin-top: 8rem;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
         
         .speech-bubble {
             position: absolute;
-            top: -40px;
-            right: -80px;
+            top: -50px;
+            right: -100px;
             background-color: #fff;
             border: 2px solid var(--robin-blue);
             border-radius: 20px;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--dark);
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-800);
             z-index: 1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            animation: float 3s ease-in-out infinite;
         }
         
         .speech-bubble:after {
             content: '';
             position: absolute;
-            bottom: -10px;
-            left: 20px;
-            width: 15px;
-            height: 15px;
+            bottom: -12px;
+            left: 25px;
+            width: 20px;
+            height: 20px;
             background-color: #fff;
             border-right: 2px solid var(--robin-blue);
             border-bottom: 2px solid var(--robin-blue);
@@ -266,202 +407,419 @@
         }
         
         .robot {
-            width: 80px;
-            height: 100px;
+            width: 100px;
+            height: 120px;
             position: relative;
             margin: 0 auto;
+            transform-style: preserve-3d;
+            animation: hover 4s ease-in-out infinite;
+        }
+
+        @keyframes hover {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
         }
         
         .robot-head {
-            width: 60px;
-            height: 50px;
-            background-color: var(--robin-blue);
-            border-radius: 10px;
+            width: 70px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--robin-blue), var(--robin-blue-dark));
+            border-radius: 15px;
             position: relative;
             margin: 0 auto;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+        }
+
+        .robot-head::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            border-radius: 15px 15px 0 0;
         }
         
         .robot-eye {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 15px;
+            height: 15px;
             background-color: white;
             border-radius: 50%;
-            top: 15px;
+            top: 18px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 45%, 55%, 100% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(0.1);
+            }
         }
         
         .robot-eye.left {
-            left: 12px;
+            left: 15px;
         }
         
         .robot-eye.right {
-            right: 12px;
+            right: 15px;
         }
         
         .robot-antenna {
             position: absolute;
-            width: 8px;
-            height: 15px;
-            background-color: var(--robin-blue);
-            top: -15px;
+            width: 10px;
+            height: 18px;
+            background: linear-gradient(to top, var(--robin-blue), var(--robin-blue-light));
+            top: -18px;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 4px 4px 0 0;
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 -2px 5px rgba(59, 130, 246, 0.2);
+        }
+
+        .robot-antenna::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: var(--robin-blue-light);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--robin-blue-light);
+            animation: pulse 2s infinite;
         }
         
         .robot-body {
-            width: 70px;
-            height: 50px;
-            background-color: var(--robin-blue);
-            border-radius: 0 0 10px 10px;
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--robin-blue), var(--robin-blue-dark));
+            border-radius: 0 0 20px 20px;
             margin: 5px auto 0;
             position: relative;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+        }
+
+        .robot-body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
         }
         
         .robot-arm {
             position: absolute;
-            width: 10px;
-            height: 30px;
-            background-color: var(--robin-blue);
-            top: 10px;
-            border-radius: 5px;
+            width: 12px;
+            height: 35px;
+            background: linear-gradient(to bottom, var(--robin-blue), var(--robin-blue-dark));
+            top: 12px;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
         }
         
         .robot-arm.left {
-            left: -15px;
+            left: -18px;
             transform: rotate(-20deg);
+            animation: wave-left 4s ease-in-out infinite;
+        }
+
+        @keyframes wave-left {
+            0%, 100% {
+                transform: rotate(-20deg);
+            }
+            50% {
+                transform: rotate(-10deg);
+            }
         }
         
         .robot-arm.right {
-            right: -15px;
+            right: -18px;
             transform: rotate(20deg);
+            animation: wave-right 4s ease-in-out infinite;
+        }
+
+        @keyframes wave-right {
+            0%, 100% {
+                transform: rotate(20deg);
+            }
+            50% {
+                transform: rotate(10deg);
+            }
         }
         
         /* Capabilities section */
         .capabilities {
-            margin-top: 3rem;
+            margin-top: 5rem;
             width: 100%;
+            position: relative;
+        }
+
+        .capabilities::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, var(--gray-300), var(--gray-400));
         }
         
         .capabilities-intro {
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin-bottom: 2rem;
-            color: #374151;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            color: var(--gray-700);
+            position: relative;
+            display: inline-block;
+        }
+
+        .capabilities-intro::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--robin-blue-light), var(--accent-light));
+            border-radius: 3px;
         }
         
         .capabilities-grid {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 2rem;
             margin-top: 1rem;
         }
         
         .capability-item {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            width: 220px;
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 260px;
             text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
             position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(8px);
         }
         
         .capability-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .capability-item:hover .capability-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
         }
         
         .capability-icon {
-            width: 40px;
-            height: 40px;
-            margin: 0 auto 1rem;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #dbeafe;
-            border-radius: 50%;
-            color: var(--robin-blue);
+            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
+            border-radius: 16px;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .capability-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            border-radius: 16px;
         }
         
         .capability-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+            position: relative;
+            display: inline-block;
+        }
+
+        .capability-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(to right, var(--robin-blue-light), var(--accent-light));
+            border-radius: 2px;
+            opacity: 0.7;
         }
         
         .capability-desc {
-            font-size: 0.9rem;
-            color: #6b7280;
-            line-height: 1.4;
+            font-size: 1rem;
+            color: var(--gray-600);
+            line-height: 1.6;
         }
         
         /* Example section styles */
         .example-section {
-            margin-top: 4rem;
+            margin-top: 6rem;
             width: 100%;
+            position: relative;
+            padding-top: 2rem;
+        }
+
+        .example-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to bottom, rgba(241, 245, 249, 0.5), rgba(255, 255, 255, 0));
+            z-index: -1;
+            border-radius: 30px;
         }
         
         .example-heading {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            color: #1f2937;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--gray-800);
+            position: relative;
+            display: inline-block;
+        }
+
+        .example-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--robin-blue), var(--accent));
+            border-radius: 2px;
         }
         
         .examples-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
         
         .example-card {
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            transform: translateZ(0);
+            backdrop-filter: blur(8px);
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border-color: rgba(59, 130, 246, 0.3);
         }
         
         .example-header {
-            background-color: #f8fafc;
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
         }
         
         .example-icon {
-            width: 32px;
-            height: 32px;
+            width: 48px;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #dbeafe;
-            border-radius: 50%;
-            color: var(--robin-blue);
+            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
+            border-radius: 12px;
+            color: white;
             flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            border-radius: 12px;
         }
         
         .example-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-800);
         }
         
         .example-content {
-            padding: 1.25rem;
+            padding: 1.5rem;
             text-align: left;
         }
         
         .chat-message {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .chat-message:last-child {
@@ -470,63 +828,70 @@
         
         .user-message {
             justify-content: flex-end;
+            animation-delay: 0.3s;
         }
         
         .robin-message {
             justify-content: flex-start;
+            animation-delay: 0.1s;
         }
         
         .message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
         
         .user-avatar {
-            background-color: #e5e7eb;
-            color: #4b5563;
+            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
+            color: var(--gray-600);
         }
         
         .robin-avatar {
-            background-color: #dbeafe;
-            color: var(--robin-blue);
+            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
+            color: white;
         }
         
         .message-bubble {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            max-width: 80%;
+            padding: 1rem 1.25rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            max-width: 85%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
         }
         
         .user-bubble {
-            background-color: #f3f4f6;
-            color: #1f2937;
+            background: linear-gradient(135deg, var(--gray-100), var(--gray-50));
+            color: var(--gray-800);
             border-top-right-radius: 4px;
+            border: 1px solid var(--gray-200);
         }
         
         .robin-bubble {
-            background-color: #eff6ff;
-            color: #1e40af;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            color: var(--gray-800);
             border-top-left-radius: 4px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
         
         .task-list {
             list-style: none;
-            margin: 0;
+            margin: 0.5rem 0 0;
             padding: 0;
         }
         
         .task-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #f3f4f6;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
         }
         
         .task-item:last-child {
@@ -534,114 +899,166 @@
         }
         
         .task-status {
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .status-complete {
-            background-color: #d1fae5;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
             color: #065f46;
         }
         
         .status-pending {
-            background-color: #fef3c7;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
             color: #92400e;
         }
         
         .task-text {
-            font-size: 0.9rem;
-            color: #4b5563;
-        }
-        
-        .memo-content {
-            font-size: 0.85rem;
-            color: #4b5563;
+            font-size: 0.95rem;
+            color: var(--gray-700);
             line-height: 1.5;
         }
         
+        .memo-content {
+            font-size: 0.95rem;
+            color: var(--gray-700);
+            line-height: 1.6;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+        
         .memo-highlight {
-            background-color: #fef3c7;
-            padding: 0 0.25rem;
-            border-radius: 2px;
+            background: linear-gradient(to right, #fef3c7, #fde68a);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #92400e;
+            display: inline-block;
         }
         
         .notification {
-            background-color: #f0f9ff;
-            border-left: 3px solid var(--robin-blue);
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            color: #1e40af;
-            border-radius: 0 4px 4px 0;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--robin-blue);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--gray-700);
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -2px rgba(59, 130, 246, 0.05);
         }
         
         .notification-title {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--robin-blue-dark);
+            font-size: 1.05rem;
         }
         
         .chart-container {
-            background-color: #f8fafc;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 0.5rem;
+            background: linear-gradient(135deg, var(--gray-50), white);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
         }
         
         .chart-bar {
-            height: 24px;
-            background: linear-gradient(90deg, #dbeafe 0%, #93c5fd 100%);
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
+            height: 28px;
+            background: linear-gradient(90deg, var(--robin-blue-light), var(--robin-blue));
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
             position: relative;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+            transition: width 1s ease-in-out;
+        }
+
+        .chart-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
         
         .chart-label {
             position: absolute;
-            left: 8px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #1e40af;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
         .chart-value {
             position: absolute;
-            right: 8px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1e3a8a;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
         .insight-tag {
             display: inline-block;
-            background-color: #dbeafe;
-            color: #1e40af;
-            font-size: 0.7rem;
+            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
+            color: white;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            margin-right: 0.75rem;
+            margin-bottom: 0.75rem;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
         }
         
         /* Footer */
         .footer {
-            margin-top: 4rem;
-            padding: 2rem 0 1rem;
+            margin-top: 6rem;
+            padding: 2rem 0 1.5rem;
             width: 100%;
             text-align: center;
             font-size: 1rem;
-            color: #6b7280;
+            color: var(--gray-500);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(226, 232, 240, 0), rgba(226, 232, 240, 1), rgba(226, 232, 240, 0));
         }
 
         .footer .location-highlight {
@@ -666,7 +1083,7 @@
         .connector {
             width: 2px;
             height: 50px;
-            background-color: #e2e8f0;
+            background: linear-gradient(to bottom, var(--gray-300), var(--gray-400));
             margin: 0 auto;
         }
         
@@ -675,78 +1092,39 @@
             width: 100%;
             height: 30px;
             margin-bottom: 1rem;
-        }
-        
-        .branch {
-            position: absolute;
-            background-color: #e2e8f0;
-        }
-        
-        .branch-center {
-            width: 2px;
-            height: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .branch-horizontal {
-            height: 2px;
-            width: 80%;
-            top: 30px;
-            left: 10%;
-        }
-        
-        .branch-left, .branch-center-left, .branch-center-right, .branch-right, .branch-center {
-            width: 2px;
-            height: 20px;
-            top: 30px;
-        }
-        
-        .branch-left {
-            left: 10%;
-        }
-        
-        .branch-center-left {
-            left: 30%;
-        }
-        
-        .branch-center {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .branch-center-right {
-            right: 30%;
-        }
-        
-        .branch-right {
-            right: 10%;
+            display: none;
         }
         
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 2.25rem;
                 margin-bottom: 1.5rem;
             }
             
             .coming-soon {
-                font-size: 1rem;
-                margin-bottom: 3rem; /* Adjusted for mobile */
+                font-size: 0.875rem;
+                margin-bottom: 3rem;
                 flex-direction: column;
                 gap: 0.25rem;
             }
             
             .time-saving {
-                padding: 1.25rem;
+                padding: 1.5rem;
                 margin: 2rem auto;
+                transform: none;
             }
             
             .time-number {
-                font-size: 2.8rem;
+                font-size: 3.5rem;
             }
             
             .time-text {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
+            }
+
+            .time-saving-icon {
+                width: 60px;
+                height: 60px;
             }
             
             .robot-container {
@@ -756,8 +1134,8 @@
             
             .speech-bubble {
                 right: -60px;
-                font-size: 0.8rem;
-                padding: 6px 12px;
+                font-size: 0.9rem;
+                padding: 10px 15px;
             }
             
             .capabilities-grid {
@@ -767,11 +1145,11 @@
             
             .capability-item {
                 width: 100%;
-                max-width: 280px;
+                max-width: 300px;
             }
             
             .branches {
-                display: none; /* Hide branches on mobile for simplicity */
+                display: none;
             }
             
             .examples-grid {
@@ -783,7 +1161,7 @@
             }
 
             .footer {
-                margin-top: 3rem;
+                margin-top: 4rem;
                 padding: 1.5rem 0 1rem;
                 font-size: 0.9rem;
             }
@@ -801,7 +1179,7 @@
         <!-- Waitlist callout -->
         <div class="waitlist-callout">
             <div class="waitlist-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                     <circle cx="9" cy="7" r="4"></circle>
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -817,7 +1195,7 @@
         <div class="time-saving">
             <div class="time-saving-content">
                 <div class="time-saving-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
@@ -862,7 +1240,7 @@
             <div class="capabilities-grid">
                 <div class="capability-item">
                     <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                         </svg>
@@ -873,7 +1251,7 @@
                 
                 <div class="capability-item">
                     <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
@@ -884,7 +1262,7 @@
                 
                 <div class="capability-item">
                     <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
                             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -898,7 +1276,7 @@
                 
                 <div class="capability-item">
                     <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                             <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                             <line x1="12" y1="22.08" x2="12" y2="12"></line>
@@ -910,7 +1288,7 @@
                 
                 <div class="capability-item">
                     <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                             <line x1="16" y1="2" x2="16" y2="6"></line>
                             <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -932,7 +1310,7 @@
                 <div class="example-card">
                     <div class="example-header">
                         <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
@@ -947,7 +1325,7 @@
                         </div>
                         <div class="chat-message robin-message">
                             <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 </svg>
                             </div>
@@ -956,7 +1334,7 @@
                                 <ul class="task-list">
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -964,7 +1342,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -972,7 +1350,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -988,7 +1366,7 @@
                                 Thanks Robin! That's helpful.
                             </div>
                             <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -1001,7 +1379,7 @@
                 <div class="example-card">
                     <div class="example-header">
                         <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                             </svg>
@@ -1015,7 +1393,7 @@
                         </div>
                         <div class="chat-message robin-message">
                             <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 </svg>
                             </div>
@@ -1024,7 +1402,7 @@
                                 <ul class="task-list">
                                     <li class="task-item">
                                         <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="12" cy="12" r="10"></circle>
                                                 <line x1="12" y1="8" x2="12" y2="12"></line>
                                                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -1034,7 +1412,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="12" cy="12" r="10"></circle>
                                                 <line x1="12" y1="8" x2="12" y2="12"></line>
                                                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -1052,7 +1430,8 @@
                                 Yes, please schedule that call for next week. Send me the questions beforehand.
                             </div>
                             <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20  stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -1065,7 +1444,7 @@
                 <div class="example-card">
                     <div class="example-header">
                         <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
@@ -1079,7 +1458,7 @@
                         </div>
                         <div class="chat-message robin-message">
                             <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 </svg>
                             </div>
@@ -1088,7 +1467,7 @@
                                 <ul class="task-list">
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -1096,7 +1475,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -1112,7 +1491,7 @@
                                 Perfect timing. Let me review those reports.
                             </div>
                             <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -1125,7 +1504,7 @@
                 <div class="example-card">
                     <div class="example-header">
                         <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                 <polyline points="14 2 14 8 20 8"></polyline>
                                 <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -1142,7 +1521,7 @@
                         </div>
                         <div class="chat-message robin-message">
                             <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 </svg>
                             </div>
@@ -1169,7 +1548,7 @@
                                 This is excellent. Share the full memo with the investment committee.
                             </div>
                             <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -1182,7 +1561,7 @@
                 <div class="example-card">
                     <div class="example-header">
                         <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                 <line x1="16" y1="2" x2="16" y2="6"></line>
                                 <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -1198,7 +1577,7 @@
                         </div>
                         <div class="chat-message robin-message">
                             <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 </svg>
                             </div>
@@ -1207,7 +1586,7 @@
                                 <ul class="task-list">
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -1215,7 +1594,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -1223,7 +1602,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <polyline points="20 6 9 17 4 12"></polyline>
                                             </svg>
                                         </div>
@@ -1239,7 +1618,7 @@
                                 This is incredibly helpful. Send me the briefing document.
                             </div>
                             <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
@@ -1252,7 +1631,7 @@
                 <div class="example-card">
                     <div class="example-header">
                         <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 3v18h18"></path>
                                 <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
                             </svg>
@@ -1266,7 +1645,7 @@
                         </div>
                         <div class="chat-message robin-message">
                             <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                                 </svg>
                             </div>
@@ -1277,7 +1656,7 @@
                                 <ul class="task-list">
                                     <li class="task-item">
                                         <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="12" cy="12" r="10"></circle>
                                                 <line x1="12" y1="8" x2="12" y2="12"></line>
                                                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -1287,7 +1666,7 @@
                                     </li>
                                     <li class="task-item">
                                         <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="12" cy="12" r="10"></circle>
                                                 <line x1="12" y1="8" x2="12" y2="12"></line>
                                                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -1324,7 +1703,7 @@
                                 This is incredibly valuable. Please prepare a brief for our partners meeting.
                             </div>
                             <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
