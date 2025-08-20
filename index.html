@@ -3,1704 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robin - AI Associate</title>
-    <!-- Added Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Robin - AI Task Automation</title>
     <style>
-        /* Base styles */
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #60a5fa;
-            --secondary: #64748b;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --robin-blue: #3b82f6; /* A pleasing medium blue */
-            --robin-blue-dark: #2563eb;
-            --robin-blue-light: #93c5fd;
-            --accent: #8b5cf6; /* Purple accent */
-            --accent-light: #c4b5fd;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #ffffff;
-            color: var(--gray-800);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Background decorative elements - removed */
-        body::before {
-            content: none;
-        }
-
-        body::after {
-            content: none;
-        }
-        
-        /* Style for "Coming soon" text at the top */
-        .coming-soon {
-            margin-bottom: 4rem;
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--gray-600);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            position: relative;
-            padding: 0.5rem 1.5rem;
-            border-radius: 9999px;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
-            letter-spacing: 0.025em;
-            text-transform: uppercase;
-            font-size: 0.875rem;
-        }
-
-        .coming-soon::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--robin-blue);
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            }
-            
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-            }
-            
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-            }
-        }
-        
-        .location-highlight {
-            position: relative;
-            color: var(--robin-blue);
-            font-weight: 600;
-            padding: 0 0.25rem;
-        }
-        
-        .location-highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--robin-blue);
-            opacity: 0.3;
-        }
-        
-        .container {
-            text-align: center;
-            max-width: 1000px;
-            position: relative;
-            width: 100%;
-            z-index: 1;
-        }
-        
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.03em;
-            margin-bottom: 2rem;
-            background: linear-gradient(to right, var(--gray-900), var(--gray-700));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-        
-        /* Style for the Robin name */
-        .robin-name {
-            color: var(--robin-blue);
-            font-weight: 700;
-            background: linear-gradient(to right, var(--robin-blue), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            position: relative;
-            display: inline-block;
-        }
-
-        .robin-name::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(to right, var(--robin-blue-light), var(--accent-light));
-            border-radius: 2px;
-            opacity: 0.5;
-        }
-        
-        /* Waitlist callout */
-        .waitlist-callout {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 16px;
-            padding: 1rem 1.75rem;
-            margin: 2rem auto;
-            max-width: 500px;
-            gap: 1rem;
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.05);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-        }
-
-        .waitlist-callout:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.15), 0 10px 10px -5px rgba(59, 130, 246, 0.1);
-        }
-
-        .waitlist-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
-            border-radius: 12px;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-        }
-
-        .waitlist-text {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            line-height: 1.4;
-        }
-
-        .waitlist-number {
-            font-weight: 800;
-            color: var(--robin-blue);
-            font-size: 1.25rem;
-            background: linear-gradient(to right, var(--robin-blue), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-        }
-
-        @media (max-width: 768px) {
-            .waitlist-callout {
-                padding: 0.75rem 1.25rem;
-                margin: 1.5rem auto;
-            }
-            
-            .waitlist-icon {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .waitlist-text {
-                font-size: 1rem;
-            }
-        }
-        
-        /* Time-saving highlight section */
-        .time-saving {
-            margin: 3rem auto;
-            padding: 2.5rem;
-            background: linear-gradient(135deg, rgba(219, 234, 254, 0.9) 0%, rgba(191, 219, 254, 0.9) 100%);
-            border-radius: 24px;
-            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.25), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
-            max-width: 650px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            transform: perspective(1000px) rotateX(2deg);
-            backdrop-filter: blur(8px);
-        }
-        
-        .time-saving::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to right, 
-                rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.5) 50%, 
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: rotate(30deg);
-            animation: shine 6s infinite;
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) rotate(30deg);
-            }
-            100% {
-                transform: translateX(100%) rotate(30deg);
-            }
-        }
-        
-        .time-saving-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .time-saving-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, white, #f8fafc);
-            border-radius: 20px;
-            color: var(--robin-blue);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .time-saving-icon::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-            border-radius: 20px;
-        }
-        
-        .time-number {
-            font-size: 4.5rem;
-            font-weight: 800;
-            color: var(--robin-blue);
-            line-height: 1;
-            margin-bottom: 0.75rem;
-            background: linear-gradient(to right, var(--robin-blue-dark), var(--robin-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
-            letter-spacing: -0.03em;
-        }
-        
-        .time-text {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #2c2c2c;
+            background: #fff;
             letter-spacing: -0.01em;
         }
-        
-        .time-subtext {
-            font-size: 1.125rem;
-            color: var(--gray-700);
-            max-width: 450px;
+
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 32px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            color: #000;
+        }
+
+        .cta-btn {
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .cta-btn:hover {
+            background: #333;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 140px 0 120px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: #000;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #6b7280;
+            margin-bottom: 48px;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
             line-height: 1.6;
         }
-        
-        /* Robot and speech bubble styles */
-        .robot-container {
-            position: relative;
-            margin: 0 auto;
-            width: 160px;
-            height: 180px;
-            margin-top: 8rem;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-        
-        .speech-bubble {
-            position: absolute;
-            top: -50px;
-            right: -100px;
-            background-color: #fff;
-            border: 2px solid var(--robin-blue);
-            border-radius: 20px;
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            z-index: 1;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .speech-bubble:after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 25px;
-            width: 20px;
-            height: 20px;
-            background-color: #fff;
-            border-right: 2px solid var(--robin-blue);
-            border-bottom: 2px solid var(--robin-blue);
-            transform: rotate(45deg);
-        }
-        
-        .robot {
-            width: 100px;
-            height: 120px;
-            position: relative;
-            margin: 0 auto;
-            transform-style: preserve-3d;
-            animation: hover 4s ease-in-out infinite;
-        }
 
-        @keyframes hover {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-        
-        .robot-head {
-            width: 70px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--robin-blue), var(--robin-blue-dark));
-            border-radius: 15px;
-            position: relative;
-            margin: 0 auto;
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
-            overflow: hidden;
-        }
-
-        .robot-head::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-            border-radius: 15px 15px 0 0;
-        }
-        
-        .robot-eye {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: white;
-            border-radius: 50%;
-            top: 18px;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-            animation: blink 4s infinite;
-        }
-
-        @keyframes blink {
-            0%, 45%, 55%, 100% {
-                transform: scaleY(1);
-            }
-            50% {
-                transform: scaleY(0.1);
-            }
-        }
-        
-        .robot-eye.left {
-            left: 15px;
-        }
-        
-        .robot-eye.right {
-            right: 15px;
-        }
-        
-        .robot-antenna {
-            position: absolute;
-            width: 10px;
-            height: 18px;
-            background: linear-gradient(to top, var(--robin-blue), var(--robin-blue-light));
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 5px 5px 0 0;
-            box-shadow: 0 -2px 5px rgba(59, 130, 246, 0.2);
-        }
-
-        .robot-antenna::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 6px;
-            background-color: var(--robin-blue-light);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--robin-blue-light);
-            animation: pulse 2s infinite;
-        }
-        
-        .robot-body {
-            width: 80px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--robin-blue), var(--robin-blue-dark));
-            border-radius: 0 0 20px 20px;
-            margin: 5px auto 0;
-            position: relative;
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
-            overflow: hidden;
-        }
-
-        .robot-body::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 30%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-        }
-        
-        .robot-arm {
-            position: absolute;
-            width: 12px;
-            height: 35px;
-            background: linear-gradient(to bottom, var(--robin-blue), var(--robin-blue-dark));
-            top: 12px;
-            border-radius: 6px;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-        }
-        
-        .robot-arm.left {
-            left: -18px;
-            transform: rotate(-20deg);
-            animation: wave-left 4s ease-in-out infinite;
-        }
-
-        @keyframes wave-left {
-            0%, 100% {
-                transform: rotate(-20deg);
-            }
-            50% {
-                transform: rotate(-10deg);
-            }
-        }
-        
-        .robot-arm.right {
-            right: -18px;
-            transform: rotate(20deg);
-            animation: wave-right 4s ease-in-out infinite;
-        }
-
-        @keyframes wave-right {
-            0%, 100% {
-                transform: rotate(20deg);
-            }
-            50% {
-                transform: rotate(10deg);
-            }
-        }
-        
-        /* Capabilities section */
-        .capabilities {
-            margin-top: 5rem;
-            width: 100%;
-            position: relative;
-        }
-
-        .capabilities::before {
-            content: '';
-            position: absolute;
-            top: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 80px;
-            background: linear-gradient(to bottom, var(--gray-300), var(--gray-400));
-        }
-        
-        .capabilities-intro {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
-            color: var(--gray-700);
-            position: relative;
-            display: inline-block;
-        }
-
-        .capabilities-intro::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, var(--robin-blue-light), var(--accent-light));
-            border-radius: 3px;
-        }
-        
-        .capabilities-grid {
+        .hero-buttons {
             display: flex;
+            gap: 15px;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 1rem;
         }
-        
-        .capability-item {
-            background: linear-gradient(135deg, #ffffff, #f8fafc);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            border-radius: 16px;
-            padding: 2rem;
-            width: 260px;
+
+        .primary-btn {
+            background: #000;
+            color: #fff;
+            padding: 16px 36px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            background: #1a1a1a;
+            transform: translateY(-1px);
+        }
+
+        .secondary-btn {
+            background: #fff;
+            color: #2c2c2c;
+            padding: 16px 36px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .secondary-btn:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+            transform: translateY(-1px);
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background: #f9f9f9;
+        }
+
+        .features h2 {
             text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(8px);
-        }
-        
-        .capability-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            border-color: rgba(59, 130, 246, 0.3);
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            color: #000;
         }
 
-        .capability-item:hover .capability-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.2);
-        }
-        
-        .capability-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
-            border-radius: 16px;
-            color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .capability-icon::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-            border-radius: 16px;
-        }
-        
-        .capability-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-            position: relative;
-            display: inline-block;
-        }
-
-        .capability-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(to right, var(--robin-blue-light), var(--accent-light));
-            border-radius: 2px;
-            opacity: 0.7;
-        }
-        
-        .capability-desc {
-            font-size: 1rem;
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-        
-        /* Example section styles */
-        .example-section {
-            margin-top: 6rem;
-            width: 100%;
-            position: relative;
-            padding-top: 2rem;
-        }
-
-        .example-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(to bottom, rgba(241, 245, 249, 0.5), rgba(255, 255, 255, 0));
-            z-index: -1;
-            border-radius: 30px;
-        }
-        
-        .example-heading {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: var(--gray-800);
-            position: relative;
-            display: inline-block;
-        }
-
-        .example-heading::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(to right, var(--robin-blue), var(--accent));
-            border-radius: 2px;
-        }
-        
-        .examples-grid {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-        }
-        
-        .example-card {
-            background: linear-gradient(135deg, #ffffff, #f8fafc);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-            transform: translateZ(0);
-            backdrop-filter: blur(8px);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
         }
 
-        .example-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            border-color: rgba(59, 130, 246, 0.3);
-        }
-        
-        .example-header {
-            background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
-            padding: 1.25rem;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .example-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
-            border-radius: 12px;
-            color: white;
-            flex-shrink: 0;
-            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .example-icon::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-            border-radius: 12px;
-        }
-        
-        .example-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-        
-        .example-content {
-            padding: 1.5rem;
-            text-align: left;
-        }
-        
-        .chat-message {
-            margin-bottom: 1.5rem;
-            display: flex;
-            gap: 1rem;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeIn 0.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .chat-message:last-child {
-            margin-bottom: 0;
-        }
-        
-        .user-message {
-            justify-content: flex-end;
-            animation-delay: 0.3s;
-        }
-        
-        .robin-message {
-            justify-content: flex-start;
-            animation-delay: 0.1s;
-        }
-        
-        .message-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        
-        .user-avatar {
-            background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
-            color: var(--gray-600);
-        }
-        
-        .robin-avatar {
-            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
-            color: white;
-        }
-        
-        .message-bubble {
-            padding: 1rem 1.25rem;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            max-width: 85%;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            line-height: 1.6;
-        }
-        
-        .user-bubble {
-            background: linear-gradient(135deg, var(--gray-100), var(--gray-50));
-            color: var(--gray-800);
-            border-top-right-radius: 4px;
-            border: 1px solid var(--gray-200);
-        }
-        
-        .robin-bubble {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            color: var(--gray-800);
-            border-top-left-radius: 4px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-        
-        .task-list {
-            list-style: none;
-            margin: 0.5rem 0 0;
-            padding: 0;
-        }
-        
-        .task-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-        }
-        
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        
-        .task-status {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .status-complete {
-            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-            color: #065f46;
-        }
-        
-        .status-pending {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            color: #92400e;
-        }
-        
-        .task-text {
-            font-size: 0.95rem;
-            color: var(--gray-700);
-            line-height: 1.5;
-        }
-        
-        .memo-content {
-            font-size: 0.95rem;
-            color: var(--gray-700);
-            line-height: 1.6;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 1rem;
-            border-radius: 12px;
-            border: 1px solid var(--gray-200);
-        }
-        
-        .memo-highlight {
-            background: linear-gradient(to right, #fef3c7, #fde68a);
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #92400e;
-            display: inline-block;
-        }
-        
-        .notification {
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            border-left: 4px solid var(--robin-blue);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            color: var(--gray-700);
-            border-radius: 0 8px 8px 0;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -2px rgba(59, 130, 246, 0.05);
-        }
-        
-        .notification-title {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--robin-blue-dark);
-            font-size: 1.05rem;
-        }
-        
-        .chart-container {
-            background: linear-gradient(135deg, var(--gray-50), white);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-top: 1rem;
-            border: 1px solid var(--gray-200);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .chart-bar {
-            height: 28px;
-            background: linear-gradient(90deg, var(--robin-blue-light), var(--robin-blue));
-            border-radius: 6px;
-            margin-bottom: 0.75rem;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-            overflow: hidden;
-            transition: width 1s ease-in-out;
-        }
-
-        .chart-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        
-        .chart-label {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .chart-value {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .insight-tag {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--robin-blue-light), var(--robin-blue));
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.3rem 0.75rem;
-            border-radius: 9999px;
-            margin-right: 0.75rem;
-            margin-bottom: 0.75rem;
-            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-        }
-        
-        /* Footer */
-        .footer {
-            margin-top: 6rem;
-            padding: 2rem 0 1.5rem;
-            width: 100%;
+        .feature {
             text-align: center;
-            font-size: 1rem;
-            color: var(--gray-500);
-            position: relative;
+            padding: 30px 20px;
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(to right, rgba(226, 232, 240, 0), rgba(226, 232, 240, 1), rgba(226, 232, 240, 0));
-        }
-
-        .footer .location-highlight {
-            position: relative;
-            color: var(--robin-blue);
+        .feature h3 {
+            font-size: 20px;
             font-weight: 600;
-            padding: 0 0.25rem;
+            margin-bottom: 15px;
+            color: #000;
         }
 
-        .footer .location-highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--robin-blue);
-            opacity: 0.3;
+        .feature p {
+            color: #666;
+            font-size: 16px;
         }
-        
-        /* Connector lines to simulate branches */
-        .connector {
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(to bottom, var(--gray-300), var(--gray-400));
-            margin: 0 auto;
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background: #fff;
         }
-        
-        .branches {
-            position: relative;
-            width: 100%;
-            height: 30px;
-            margin-bottom: 1rem;
-            display: none;
+
+        .cta-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #000;
         }
-        
+
+        .cta-section p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        footer p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.25rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .coming-soon {
-                font-size: 0.875rem;
-                margin-bottom: 3rem;
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-            
-            .time-saving {
-                padding: 1.5rem;
-                margin: 2rem auto;
-                transform: none;
-            }
-            
-            .time-number {
-                font-size: 3.5rem;
-            }
-            
-            .time-text {
-                font-size: 1.5rem;
+            .nav-links {
+                display: none;
             }
 
-            .time-saving-icon {
-                width: 60px;
-                height: 60px;
+            .hero h1 {
+                font-size: 36px;
             }
-            
-            .robot-container {
-                transform: scale(0.9);
-                margin-top: 6rem;
+
+            .hero p {
+                font-size: 18px;
             }
-            
-            .speech-bubble {
-                right: -60px;
-                font-size: 0.9rem;
-                padding: 10px 15px;
-            }
-            
-            .capabilities-grid {
+
+            .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
-            .capability-item {
+
+            .primary-btn, .secondary-btn {
                 width: 100%;
                 max-width: 300px;
             }
-            
-            .branches {
-                display: none;
-            }
-            
-            .examples-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .example-card {
-                max-width: 100%;
-            }
 
-            .footer {
-                margin-top: 4rem;
-                padding: 1.5rem 0 1rem;
-                font-size: 0.9rem;
+            .features h2, .cta-section h2 {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="coming-soon">
-            Coming Soon
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Robin</div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#" class="cta-btn">Get Started</a>
+            </nav>
         </div>
-        
-        <h1>We're building <span class="robin-name">Robin</span>, an agentic AI Associate for VC, PE, and IB.</h1>
-        
-        <!-- Waitlist callout -->
-        <div class="waitlist-callout">
-            <div class="waitlist-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-            </div>
-            <div class="waitlist-text">
-                <span class="waitlist-number">100+</span> people have already joined the waitlist
-            </div>
-        </div>
-        
-        <!-- Time-saving highlight section -->
-        <div class="time-saving">
-            <div class="time-saving-content">
-                <div class="time-saving-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                </div>
-                <div class="time-number">10+ Hours</div>
-                <div class="time-text">Saved Every Week</div>
-                <p class="time-subtext">Robin automates your routine tasks so you can focus on what truly matters.</p>
-            </div>
-        </div>
-        
-        <div class="robot-container">
-            <div class="speech-bubble">Hi, I'm Robin!</div>
-            <div class="robot">
-                <div class="robot-antenna"></div>
-                <div class="robot-head">
-                    <div class="robot-eye left"></div>
-                    <div class="robot-eye right"></div>
-                </div>
-                <div class="robot-body">
-                    <div class="robot-arm left"></div>
-                    <div class="robot-arm right"></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Connector and branches -->
-        <div class="connector"></div>
-        <div class="branches">
-            <div class="branch branch-center"></div>
-            <div class="branch branch-horizontal"></div>
-            <div class="branch branch-left"></div>
-            <div class="branch branch-center-left"></div>
-            <div class="branch branch-center"></div>
-            <div class="branch branch-center-right"></div>
-            <div class="branch branch-right"></div>
-        </div>
-        
-        <!-- Capabilities section -->
-        <div class="capabilities">
-            <p class="capabilities-intro">Here's a few things I can do for you!</p>
-            
-            <div class="capabilities-grid">
-                <div class="capability-item">
-                    <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="capability-title">Due Diligence</h3>
-                    <p class="capability-desc">Analyze financials, market data, and competitive landscapes to support investment decisions.</p>
-                </div>
-                
-                <div class="capability-item">
-                    <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                    </div>
-                    <h3 class="capability-title">Deal Sourcing</h3>
-                    <p class="capability-desc">Identify promising investment opportunities and filter deals based on your criteria.</p>
-                </div>
-                
-                <div class="capability-item">
-                    <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                    </div>
-                    <h3 class="capability-title">Investment Memos</h3>
-                    <p class="capability-desc">Draft comprehensive investment memos with key insights and recommendations.</p>
-                </div>
-                
-                <div class="capability-item">
-                    <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h3 class="capability-title">Admin Tasks</h3>
-                    <p class="capability-desc">Update deal pipelines, organize data, and handle routine administrative work to keep your operations running smoothly.</p>
-                </div>
-                
-                <div class="capability-item">
-                    <div class="capability-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                    </div>
-                    <h3 class="capability-title">Personal Assistant</h3>
-                    <p class="capability-desc">Schedule calls, send follow-ups, and keep you on track with your tasks and priorities throughout the day.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Examples section -->
-        <div class="example-section">
-            <h2 class="example-heading">Robin in Action</h2>
-            
-            <div class="examples-grid">
-                <!-- Admin Tasks Example -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                            </svg>
-                        </div>
-                        <div class="example-title">Admin Tasks</div>
-                    </div>
-                    <div class="example-content">
-                        <div class="notification">
-                            <div class="notification-title">Robin noticed updates needed</div>
-                            I detected several deal status changes from your emails and meeting notes that need to be reflected in our pipeline.
-                        </div>
-                        <div class="chat-message robin-message">
-                            <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                </svg>
-                            </div>
-                            <div class="message-bubble robin-bubble">
-                                I've proactively updated the deal pipeline based on information from your recent emails and meetings:
-                                <ul class="task-list">
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">OpenAI moved to Active Diligence (based on yesterday's call)</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Anthropic moved to Term Sheet (per CEO email)</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Added Cohere to Initial Screening (from conference contact)</div>
-                                    </li>
-                                </ul>
-                                <br>
-                                I've also scheduled follow-up meetings with the OpenAI team for next Tuesday.
-                            </div>
-                        </div>
-                        <div class="chat-message user-message">
-                            <div class="message-bubble user-bubble">
-                                Thanks Robin! That's helpful.
-                            </div>
-                            <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Due Diligence Example -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                            </svg>
-                        </div>
-                        <div class="example-title">Due Diligence</div>
-                    </div>
-                    <div class="example-content">
-                        <div class="notification">
-                            <div class="notification-title">Robin initiated analysis</div>
-                            I noticed you've been researching OpenAI. I've taken the initiative to analyze their financials and market position.
-                        </div>
-                        <div class="chat-message robin-message">
-                            <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                </svg>
-                            </div>
-                            <div class="message-bubble robin-bubble">
-                                I've completed my analysis of OpenAI's financials and market position. Key findings:
-                                <ul class="task-list">
-                                    <li class="task-item">
-                                        <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">GPT-4 API usage growing at 215% QoQ, but compute costs rising at 187%</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Enterprise contracts up 340% YoY, but competition from Anthropic intensifying</div>
-                                    </li>
-                                </ul>
-                                <br>
-                                I've prepared a list of due diligence questions. Would you like me to schedule a call with their CFO to discuss these findings?
-                            </div>
-                        </div>
-                        <div class="chat-message user-message">
-                            <div class="message-bubble user-bubble">
-                                Yes, please schedule that call for next week. Send me the questions beforehand.
-                            </div>
-                            <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Deal Sourcing Example -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                        </div>
-                        <div class="example-title">Deal Sourcing</div>
-                    </div>
-                    <div class="example-content">
-                        <div class="notification">
-                            <div class="notification-title">Robin discovered opportunities</div>
-                            Based on your investment thesis and recent market trends, I've identified promising opportunities.
-                        </div>
-                        <div class="chat-message robin-message">
-                            <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                </svg>
-                            </div>
-                            <div class="message-bubble robin-bubble">
-                                I've identified these healthcare AI startups that match your investment criteria:
-                                <ul class="task-list">
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">MedMind AI - $3.2M seed, 127% QoQ growth, strong IP portfolio</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">DiagnosticAI - $4.7M, FDA approval pending, strong founding team</div>
-                                    </li>
-                                </ul>
-                                <br>
-                                I've already reached out to both founding teams and scheduled introductory calls for next week. I've also prepared preliminary research reports on both companies.
-                            </div>
-                        </div>
-                        <div class="chat-message user-message">
-                            <div class="message-bubble user-bubble">
-                                Perfect timing. Let me review those reports.
-                            </div>
-                            <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Investment Memos Example -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="example-title">Investment Memos</div>
-                    </div>
-                    <div class="example-content">
-                        <div class="notification">
-                            <div class="notification-title">Robin prepared memo</div>
-                            I noticed your interest in Quantum Computing Inc. and prepared a comprehensive investment memo based on our research.
-                        </div>
-                        <div class="chat-message robin-message">
-                            <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                </svg>
-                            </div>
-                            <div class="message-bubble robin-bubble">
-                                <div class="memo-content">
-                                    <strong>Investment Memo Summary: Quantum Computing Inc.</strong><br>
-                                    <em>(Full 12-page memo saved to the deal room)</em><br><br>
-                                    <strong>Recommendation:</strong> <span class="memo-highlight">Proceed to Term Sheet</span><br><br>
-                                    <strong>Key Strengths:</strong><br>
-                                    - Proprietary 128-qubit architecture with 2x stability vs competitors<br>
-                                    - $4.2M ARR with 94% YoY growth<br>
-                                    - Strong IP portfolio (17 patents)<br><br>
-                                    <strong>Risks:</strong><br>
-                                    - Hardware scaling challenges beyond 256 qubits<br>
-                                    - Potential competition from Google, IBM<br><br>
-                                    <strong>Proposed Terms:</strong> $25M Series B, $150M pre-money valuation
-                                </div>
-                                <br>
-                                The full memo includes detailed technical analysis, competitive landscape, team assessment, financial projections, and market sizing. I've also prepared a competitive analysis comparing their technology to other players in the quantum computing space.
-                            </div>
-                        </div>
-                        <div class="chat-message user-message">
-                            <div class="message-bubble user-bubble">
-                                This is excellent. Share the full memo with the investment committee.
-                            </div>
-                            <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Personal Assistant Example -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                        </div>
-                        <div class="example-title">Personal Assistant</div>
-                    </div>
-                    <div class="example-content">
-                        <div class="notification">
-                            <div class="notification-title">Robin organized your day</div>
-                            I've prepared your daily brief and optimized your workflow for maximum productivity.
-                        </div>
-                        <div class="chat-message robin-message">
-                            <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                </svg>
-                            </div>
-                            <div class="message-bubble robin-bubble">
-                                <strong>Good morning! I've optimized your day:</strong>
-                                <ul class="task-list">
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Analyzed the Quantum Computing Inc. pitch deck and highlighted 3 critical questions for your meeting</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Prepared a competitive analysis for your board presentation (saved to your drive)</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-complete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Reorganized your SF trip next week to maximize founder meetings (8 meetings in 2 days)</div>
-                                    </li>
-                                </ul>
-                                <br>
-                                I've also drafted responses to the 5 highest-priority emails in your inbox and compiled the latest updates from all portfolio companies into a single briefing document for your review.
-                            </div>
-                        </div>
-                        <div class="chat-message user-message">
-                            <div class="message-bubble user-bubble">
-                                This is incredibly helpful. Send me the briefing document.
-                            </div>
-                            <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Market Intelligence Example (New) -->
-                <div class="example-card">
-                    <div class="example-header">
-                        <div class="example-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 3v18h18"></path>
-                                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>
-                            </svg>
-                        </div>
-                        <div class="example-title">Market Intelligence</div>
-                    </div>
-                    <div class="example-content">
-                        <div class="notification">
-                            <div class="notification-title">Robin detected market shift</div>
-                            I've identified a significant market trend that impacts your AI portfolio companies.
-                        </div>
-                        <div class="chat-message robin-message">
-                            <div class="message-avatar robin-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                </svg>
-                            </div>
-                            <div class="message-bubble robin-bubble">
-                                <strong>Market Intelligence Alert:</strong> I've detected a significant shift in the AI infrastructure market that will impact several of your portfolio companies.
-                                <br><br>
-                                <strong>Key findings:</strong>
-                                <ul class="task-list">
-                                    <li class="task-item">
-                                        <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">NVIDIA H100 supply constraints easing (42% increase in availability)</div>
-                                    </li>
-                                    <li class="task-item">
-                                        <div class="task-status status-pending">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                            </svg>
-                                        </div>
-                                        <div class="task-text">Cloud GPU pricing dropped 18% in the last 30 days</div>
-                                    </li>
-                                </ul>
-                                <br>
-                                <div class="chart-container">
-                                    <div class="chart-bar" style="width: 85%;">
-                                        <span class="chart-label">NVIDIA</span>
-                                        <span class="chart-value">+85%</span>
-                                    </div>
-                                    <div class="chart-bar" style="width: 62%;">
-                                        <span class="chart-label">AMD</span>
-                                        <span class="chart-value">+62%</span>
-                                    </div>
-                                    <div class="chart-bar" style="width: 47%;">
-                                        <span class="chart-label">Intel</span>
-                                        <span class="chart-value">+47%</span>
-                                    </div>
-                                </div>
-                                <br>
-                                <span class="insight-tag">Opportunity</span>
-                                <span class="insight-tag">Cost Reduction</span>
-                                <span class="insight-tag">Scaling</span>
-                                <br><br>
-                                I've already scheduled calls with CTOs of your three AI portfolio companies to discuss how they can leverage this shift to reduce infrastructure costs and accelerate growth.
-                            </div>
-                        </div>
-                        <div class="chat-message user-message">
-                            <div class="message-bubble user-bubble">
-                                This is incredibly valuable. Please prepare a brief for our partners meeting.
-                            </div>
-                            <div class="message-avatar user-avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </header>
 
-    <!-- Footer -->
-    <div class="footer">
-        <span class="location-highlight">Built in San Francisco, CA</span>
-    </div>
+    <section class="hero">
+        <div class="container">
+            <h1>Automate your manual tasks</h1>
+            <p>Robin is an AI agent that helps you complete repetitive work automatically, saving you time and reducing errors.</p>
+            <div class="hero-buttons">
+                <a href="#" class="primary-btn">Start Free Trial</a>
+                <a href="#" class="secondary-btn">See How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Simple automation for everyone</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Easy Setup</h3>
+                    <p>Get started in minutes. No technical expertise required to automate your first task.</p>
+                </div>
+                <div class="feature">
+                    <h3>Smart Learning</h3>
+                    <p>Robin learns how you work and adapts to handle tasks exactly the way you want them done.</p>
+                </div>
+                <div class="feature">
+                    <h3>Reliable Results</h3>
+                    <p>Consistent, accurate task completion every time. Focus on important work while Robin handles the rest.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to save time?</h2>
+            <p>Start automating your manual tasks today and see how much more you can accomplish.</p>
+            <a href="#" class="primary-btn">Try Robin Free</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Robin. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
