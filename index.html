@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robin - AI Task Automation</title>
+    <title>Robin AI - Your Intelligent Task Automation Assistant</title>
+    <meta name="description" content="Robin AI completes manual and repetitive tasks to make you more efficient and free up valuable time. Automate emails, scheduling, data entry, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -11,294 +16,558 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: hsl(280, 85%, 55%);
+            --primary-glow: hsl(315, 85%, 65%);
+            --accent: hsl(340, 90%, 70%);
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(230, 15%, 15%);
+            --muted-foreground: hsl(230, 10%, 60%);
+            --border: hsl(280, 20%, 90%);
+            --card: hsl(0, 0%, 100%);
+            --secondary: hsl(280, 15%, 95%);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
-            color: #2c2c2c;
-            background: #fff;
-            letter-spacing: -0.01em;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         /* Header */
-        header {
-            padding: 32px 0;
-            border-bottom: 1px solid #f0f0f0;
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
         }
 
-        nav {
+        .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .logo {
-            font-size: 26px;
-            font-weight: 700;
-            color: #000;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links {
             display: flex;
-            list-style: none;
-            gap: 30px;
+            align-items: center;
+            gap: 8px;
         }
 
-        .nav-links a {
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-glow));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--foreground);
+        }
+
+        .nav {
+            display: none;
+            gap: 32px;
+        }
+
+        .nav a {
+            color: var(--muted-foreground);
             text-decoration: none;
-            color: #666;
-            font-weight: 400;
+            transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: #000;
+        .nav a:hover {
+            color: var(--primary);
         }
 
-        .cta-btn {
-            background: #000;
-            color: #fff;
-            padding: 10px 20px;
+        .header-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
             text-decoration: none;
-            border-radius: 5px;
             font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
         }
 
-        .cta-btn:hover {
-            background: #333;
+        .btn-ghost {
+            background: transparent;
+            color: var(--foreground);
         }
 
-        /* Hero */
+        .btn-ghost:hover {
+            background: var(--secondary);
+        }
+
+        .btn-hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-glow));
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 0 40px hsla(280, 85%, 55%, 0.2);
+        }
+
+        .btn-hero:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px hsla(315, 85%, 65%, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--foreground);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+        }
+
+        .btn-lg {
+            padding: 16px 32px;
+            font-size: 16px;
+        }
+
+        /* Hero Section */
         .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(280, 25%, 98%));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
             text-align: center;
-            padding: 140px 0 120px;
+            max-width: 800px;
+            padding: 0 24px;
         }
 
         .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 28px;
-            color: #000;
-            line-height: 1.1;
-            letter-spacing: -0.025em;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: bold;
+            margin-bottom: 24px;
+            line-height: 1.2;
         }
 
-        .hero p {
-            font-size: 22px;
-            color: #6b7280;
-            margin-bottom: 48px;
-            max-width: 640px;
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--primary-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.125rem, 4vw, 1.5rem);
+            color: var(--muted-foreground);
+            margin-bottom: 32px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.6;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 16px;
             justify-content: center;
-            flex-wrap: wrap;
+            margin-bottom: 64px;
         }
 
-        .primary-btn {
-            background: #000;
-            color: #fff;
-            padding: 16px 36px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.2s ease;
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 32px;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .primary-btn:hover {
-            background: #1a1a1a;
-            transform: translateY(-1px);
-        }
-
-        .secondary-btn {
-            background: #fff;
-            color: #2c2c2c;
-            padding: 16px 36px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.2s ease;
-        }
-
-        .secondary-btn:hover {
-            background: #f9fafb;
-            border-color: #d1d5db;
-            transform: translateY(-1px);
-        }
-
-        /* Features */
-        .features {
-            padding: 80px 0;
-            background: #f9f9f9;
-        }
-
-        .features h2 {
+        .stat {
             text-align: center;
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 60px;
-            color: #000;
         }
 
-        .features-grid {
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--muted-foreground);
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            padding: 96px 24px;
+            background: var(--background);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--muted-foreground);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .use-cases-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .feature {
-            text-align: center;
-            padding: 30px 20px;
+        .use-case-card {
+            background: var(--card);
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid hsla(280, 20%, 90%, 0.6);
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px hsla(280, 85%, 55%, 0.03);
         }
 
-        .feature h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #000;
+        .use-case-card:hover {
+            transform: translateY(-4px);
+            border-color: hsla(280, 85%, 55%, 0.3);
+            box-shadow: 0 8px 40px hsla(280, 85%, 55%, 0.08);
         }
 
-        .feature p {
-            color: #666;
-            font-size: 16px;
+        .use-case-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
         }
 
-        /* CTA Section */
-        .cta-section {
-            padding: 80px 0;
-            text-align: center;
-            background: #fff;
+        .use-case-icon {
+            background: hsla(280, 85%, 55%, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-right: 16px;
         }
 
-        .cta-section h2 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #000;
+        .use-case-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary);
         }
 
-        .cta-section p {
+        .use-case-title {
             font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: 600;
         }
 
-        /* Footer */
-        footer {
-            padding: 40px 0;
+        .use-case-description {
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+
+        /* Call to Action Section */
+        .cta {
+            padding: 96px 24px;
+            background: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(280, 25%, 98%));
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
-            border-top: 1px solid #eee;
         }
 
-        footer p {
-            color: #999;
+        .cta-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 20px hsla(280, 85%, 55%, 0.05);
+            border: 1px solid hsla(280, 20%, 90%, 0.6);
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            color: var(--muted-foreground);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .cta-disclaimer {
             font-size: 14px;
+            color: var(--muted-foreground);
         }
 
-        /* Mobile */
-        @media (max-width: 768px) {
-            .nav-links {
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .hero-buttons,
+            .cta-buttons {
+                flex-direction: row;
+            }
+
+            .nav {
+                display: flex;
+            }
+
+            .btn-ghost {
+                display: inline-flex;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .btn-ghost {
                 display: none;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .primary-btn, .secondary-btn {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .features h2, .cta-section h2 {
-                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Robin</div>
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <a href="#" class="cta-btn">Get Started</a>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">R</div>
+                <span class="logo-text">Robin</span>
+            </div>
+            
+            <nav class="nav">
+                <a href="#features">Features</a>
+                <a href="#use-cases">Use Cases</a>
+                <a href="#pricing">Pricing</a>
             </nav>
+            
+            <div class="header-buttons">
+                <a href="#" class="btn btn-ghost">Sign In</a>
+                <a href="#" class="btn btn-hero">Get Started</a>
+            </div>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Automate your manual tasks</h1>
-            <p>Robin is an AI agent that helps you complete repetitive work automatically, saving you time and reducing errors.</p>
-            <div class="hero-buttons">
-                <a href="#" class="primary-btn">Start Free Trial</a>
-                <a href="#" class="secondary-btn">See How It Works</a>
+    <!-- Hero Section -->
+    <section class="hero">        
+        <div class="hero-content">
+            <div class="fade-in">
+                <h1>
+                    Meet <span class="hero-gradient">Robin</span>
+                </h1>
+                
+                <h2>
+                    Your intelligent AI assistant that completes manual and repetitive tasks, 
+                    making you more efficient and freeing up your valuable time.
+                </h2>
+                
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-hero btn-lg">Start Automating Today</a>
+                    <a href="#" class="btn btn-outline btn-lg">Learn More</a>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Time Saved</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Always Working</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Scalable Tasks</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="features" id="features">
+    <!-- Use Cases Section -->
+    <section class="use-cases">
         <div class="container">
-            <h2>Simple automation for everyone</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <h3>Easy Setup</h3>
-                    <p>Get started in minutes. No technical expertise required to automate your first task.</p>
+            <div class="section-header">
+                <h2>What Robin Can Do For You</h2>
+                <p>From simple tasks to complex workflows, Robin handles it all so you can focus on what matters most.</p>
+            </div>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="use-case-title">Email Management</h3>
+                    </div>
+                    <p class="use-case-description">
+                        Automatically sort, prioritize, and respond to emails based on your preferences and patterns.
+                    </p>
                 </div>
-                <div class="feature">
-                    <h3>Smart Learning</h3>
-                    <p>Robin learns how you work and adapts to handle tasks exactly the way you want them done.</p>
+
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="use-case-title">Smart Scheduling</h3>
+                    </div>
+                    <p class="use-case-description">
+                        Coordinate meetings, find optimal time slots, and manage your calendar across multiple platforms.
+                    </p>
                 </div>
-                <div class="feature">
-                    <h3>Reliable Results</h3>
-                    <p>Consistent, accurate task completion every time. Focus on important work while Robin handles the rest.</p>
+
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="use-case-title">Document Processing</h3>
+                    </div>
+                    <p class="use-case-description">
+                        Extract data, generate reports, and organize documents with intelligent automation.
+                    </p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="use-case-title">Data Analysis</h3>
+                    </div>
+                    <p class="use-case-description">
+                        Process spreadsheets, generate insights, and create visualizations from complex datasets.
+                    </p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                            </svg>
+                        </div>
+                        <h3 class="use-case-title">Social Media</h3>
+                    </div>
+                    <p class="use-case-description">
+                        Schedule posts, monitor engagement, and maintain consistent brand presence across platforms.
+                    </p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="use-case-title">Data Entry</h3>
+                    </div>
+                    <p class="use-case-description">
+                        Automate repetitive data input tasks and maintain accurate records across systems.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2>Ready to save time?</h2>
-            <p>Start automating your manual tasks today and see how much more you can accomplish.</p>
-            <a href="#" class="primary-btn">Try Robin Free</a>
+    <!-- Call to Action Section -->
+    <section class="cta">
+        <div class="cta-container">
+            <div class="cta-card">
+                <h2>Ready to Reclaim Your Time?</h2>
+                <p>
+                    Join thousands of professionals who have already transformed their workflow with Robin. 
+                    Start automating your repetitive tasks today and focus on what truly matters.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-hero btn-lg">Get Started Free</a>
+                    <a href="#" class="btn btn-outline btn-lg">Schedule Demo</a>
+                </div>
+                
+                <p class="cta-disclaimer">
+                    No credit card required • 14-day free trial • Cancel anytime
+                </p>
+            </div>
         </div>
     </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Robin. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>
